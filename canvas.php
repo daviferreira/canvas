@@ -32,7 +32,7 @@ class canvas {
 	public function __construct( $origem = '' )
 	{
 
-		$this->origem					= $origem;
+		$this->origem = $origem;
 
 		if ( $this->origem )
 		{
@@ -86,7 +86,7 @@ class canvas {
 	*/
 	public function carrega( $origem = '' )
 	{
-		$this->origem			= $origem;
+		$this->origem = $origem;
 		$this->dados();
 		return $this;
 	} // fim carrega
