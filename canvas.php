@@ -3,30 +3,41 @@
  * canvas.php
  *
  * Classe para manipulação de imagens
- * Interface para GD
  *
  * @author     Davi Ferreira <contato@daviferreira.com>
- * @version    1.0 $ 2010-05-21 19:56:33 $
- *
- * TODO:
+ * @version    1.0 $ 2010-00-15 16:14:21 $
 */
 
 class canvas {
 
-	// arquivos
-	private $origem, $img, $img_temp;
-	// dimensões
-	private $largura, $altura, $nova_largura, $nova_altura, $tamanho_html;
-	// dados do arquivo
-	private $formato, $extensao, $tamanho, $arquivo, $diretorio;
-	// cor de fundo para preenchimento
-	private $rgb;
-	// posicionamento do crop
+    /**
+     * Variáveis para armazenamento de arquivos/imgs
+     **/
+    private $origem, $img, $img_temp;
+
+	/**
+	 * Armazenam as dimensões da imagem atual e da nova imagem caso exista
+	 **/
+    private $largura, $altura, $nova_largura, $nova_altura, $tamanho_html;
+
+    /**
+     * Informações sobre o arquivo enviado e diretório
+     **/
+    private $formato, $extensao, $tamanho, $arquivo, $diretorio;
+
+    /**
+     * Array RGB para resize com preenchimendo do fundo
+     **/
+    private $rgb;
+
+    /**
+     * Coordenadas para posicionamento do crop
+     **/
 	private $posicao_crop;
 
 	/**
 	 * Construtor
-	 * @param $string caminho da imagem a ser carregada
+	 * @param $string caminho da imagem a ser carregada [opcional]
 	 * @return void
 	*/
 	public function __construct( $origem = '' )
@@ -40,7 +51,7 @@ class canvas {
 		}
 
 		// RGB padrão -> branco
-		$this->rgb( 255, 255, 255 );
+        $this->rgb( 255, 255, 255 );
 	} // fim construtor
 
 	/**
@@ -65,7 +76,7 @@ class canvas {
 			}
 			else
 			{
-				// pega dimensões
+				// busca dimensões da imagem enviada 
 				$this->dimensoes();
 
 				// cria imagem para php
@@ -98,13 +109,15 @@ class canvas {
 	*/
 	private function dimensoes()
 	{
-			$dimensoes 				= getimagesize( $this->origem );
-			$this->largura 	 		= $dimensoes[0];
-			$this->altura	 		= $dimensoes[1];
-			// 1 = gif, 2 = jpeg, 3 = png, 6 = BMP
-			// http://br2.php.net/manual/en/function.exif-imagetype.php
-			$this->formato			= $dimensoes[2];
-			$this->tamanho_html		= $dimensoes[3];
+        $dimensoes 				= getimagesize( $this->origem );
+        $this->largura 	 		= $dimensoes[0];
+        $this->altura	 		= $dimensoes[1];
+        /**
+         * 1 = gif, 2 = jpeg, 3 = png, 6 = BMP
+         * http://br2.php.net/manual/en/function.exif-imagetype.php
+         **/
+        $this->formato			= $dimensoes[2];
+        $this->tamanho_html		= $dimensoes[3];
 	} // fim dimensoes
 
 	/**
@@ -159,6 +172,7 @@ class canvas {
 
     /**
      * Carrega uma imagem via URL
+     * OBS: depente das configurações do servidor para acesso remoto de arquivos
      * @param String $url endereço da imagem
 	 * @return Object instância atual do objeto, para métodos encadeados
      **/
@@ -193,7 +207,6 @@ class canvas {
 
 	/**
 	 * Cria objeto de imagem para manipulação no GD
-	 * @param
 	 * @return void
 	*/
 	private function criaImagem()
@@ -577,10 +590,17 @@ class canvas {
 		}
 		return $this;
 	} // fim legenda
-	
+
+    /**
+     * Calcula a posição da legenda de acordo com string passada via parâmetro
+     *
+     * @param String $posicao valores pré-definidos (topo_esquerda, meio_centro etc.)
+     * @param Integer $largura largura da imagem
+     * @param Integer $altura altura da imagem
+     * @return void
+     **/    
 	private function calculaPosicaoLegenda( $posicao, $largura, $altura )
 	{
-		
 		// define X e Y para posicionamento
 		switch( $posicao )
 		{
@@ -635,10 +655,10 @@ class canvas {
 	 * @param Int/Sring $y posição y da marca na imagem ou constante para marcaFixa()
 	 * @return Boolean true/false dependendo do resultado da operação
 	 * @param Int $alfa valor para transparência (0-100)
-	 			  -> se utilizar alfa, a função imagecopymerge não preserva
-				  -> o alfa nativo do PNG
-	* @return Object instância atual do objeto, para métodos encadeados
-	 */
+	 *			  -> se utilizar alfa, a função imagecopymerge não preserva
+	 *			  -> o alfa nativo do PNG
+	 * @return Object instância atual do objeto, para métodos encadeados
+	 **/
 	public function marca( $imagem, $x = 0, $y = 0, $alfa = 100 )
 	{
 		// cria imagem temporária para merge
@@ -695,7 +715,7 @@ class canvas {
 	 *        [topo, meio, baixo] + [esquerda, centro, direita]
 	 * @param Int $alfa valor para transparência (0-100)
 	 * @return void
-	*/
+	 **/
 	private function marcaFixa( $imagem, $posicao, $alfa = 100 )
 	{
 
@@ -879,10 +899,6 @@ class canvas {
 		return $this;
     } // fim filtrar
 
-
-//------------------------------------------------------------------------------
-// gera imagem de saída
-
 	/**
 	 * retorna saída para tela ou arquivo
 	 * @param String $destino caminho e nome do arquivo a serem criados
@@ -903,7 +919,6 @@ class canvas {
 			{
 				trigger_error( 'Diretório de destino inválido ou inexistente', E_USER_ERROR );
 			}
-
 		}
 
 		if ( !isset( $extensao_destino ) )
@@ -961,9 +976,8 @@ class canvas {
 
 	} // fim grava
 
-//------------------------------------------------------------------------------
-// fim da classe
-}
+} // fim da classe
+
 
 //------------------------------------------------------------------------------
 // suporte para a manipulação de arquivos BMP
