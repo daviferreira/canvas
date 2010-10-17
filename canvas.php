@@ -776,20 +776,20 @@ class canvas {
      **/
     public function filtra( $filtro, $quantidade = 1, $arg1 = NULL, $arg2 = NULL, $arg3 = NULL, $arg4 = NULL )
     {
-     switch( $filtro )
-     {
-         case 'blur':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
-                    }
+		switch( $filtro )
+     	{
+         	case 'blur':
+            	if( is_numeric( $quantidade ) && $quantidade > 1 )
+                {
+                        for( $i = 1; $i <= $quantidade; $i++ )
+                {
+                  imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
+                }
+                   }
+                   else
+                   {
+                        imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
+                   }
           break;
          case 'blur2':
                     if( is_numeric( $quantidade ) && $quantidade > 1 )
