@@ -107,15 +107,15 @@ class canvas {
       **/
      private function dimensoes()
      {
-     $dimensoes                    = getimagesize( $this->origem );
-     $this->largura               = $dimensoes[0];
-     $this->altura               = $dimensoes[1];
-     /**
-      * 1 = gif, 2 = jpeg, 3 = png, 6 = BMP
-      * http://br2.php.net/manual/en/function.exif-imagetype.php
-      **/
-     $this->formato               = $dimensoes[2];
-     $this->tamanho_html          = $dimensoes[3];
+	$dimensoes                  = getimagesize( $this->origem );
+	$this->largura              = $dimensoes[0];
+	$this->altura               = $dimensoes[1];
+	/**
+	* 1 = gif, 2 = jpeg, 3 = png, 6 = BMP
+	* http://br2.php.net/manual/en/function.exif-imagetype.php
+	**/
+	$this->formato               = $dimensoes[2];
+	$this->tamanho_html          = $dimensoes[3];
      } // fim dimensoes
 
      /**
@@ -125,9 +125,9 @@ class canvas {
      private function dadosArquivo()
      {
           // imagem de origem
-          $pathinfo               = pathinfo( $this->origem );
+          $pathinfo            = pathinfo( $this->origem );
           $this->extensao      = strtolower( $pathinfo['extension'] );
-          $this->arquivo          = $pathinfo['basename'];
+          $this->arquivo       = $pathinfo['basename'];
           $this->diretorio     = $pathinfo['dirname'];
      } // fim dadosArquivo
 
