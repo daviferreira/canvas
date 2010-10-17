@@ -1,11 +1,11 @@
 <?php
 /**
- * canvas.php
  *
- * Classe para manipulação de imagens
+ * Classe para manipulação de imagens utilizando a extensão GD
+ * e recursos avançados de filtros. Requer PHP 5 ou superior.
  *
  * @author     Davi Ferreira <contato@daviferreira.com>
- * @version    1.0 $ 2010-00-15 16:14:21 $
+ * @version    1.0 $ 2010-10-17 19:11:51 $
 */
 
 class canvas {
@@ -36,10 +36,10 @@ class canvas {
     private $posicao_crop;
 
     /**
-      * Construtor
-      * @param $string caminho da imagem a ser carregada [opcional]
-      * @return void
-      **/
+     * Construtor
+     * @param $string caminho da imagem a ser carregada [opcional]
+     * @return void
+     **/
      public function __construct( $origem = '' )
      {
 
@@ -779,116 +779,115 @@ class canvas {
 		switch( $filtro )
      	{
          	case 'blur':
-            	if( is_numeric( $quantidade ) && $quantidade > 1 )
-                {
-                        for( $i = 1; $i <= $quantidade; $i++ )
-                {
-                  imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
-                }
-                   }
-                   else
-                   {
-                        imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
-                   }
-          break;
-         case 'blur2':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_SELECTIVE_BLUR );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_SELECTIVE_BLUR );
-                    }
-          break;
-               case 'brilho':
-                    imagefilter( $this->img, IMG_FILTER_BRIGHTNESS, $arg1 );
-                    break;
-         case 'cinzas':
-          imagefilter( $this->img, IMG_FILTER_GRAYSCALE );
-          break;
-               case 'colorir':
-                    imagefilter( $this->img, IMG_FILTER_COLORIZE, $arg1, $arg2, $arg3, $arg4 );
-                    break;
-               case 'contraste':
-                    imagefilter( $this->img, IMG_FILTER_CONTRAST, $arg1 );
-                    break;
-               case 'edge':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_EDGEDETECT );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_EDGEDETECT );
-                    }
-                    break;
-               case 'emboss':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_EMBOSS );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_EMBOSS );
-                    }
-                    break;
-
-         case 'negativo':
-          imagefilter( $this->img, IMG_FILTER_NEGATE );
-          break;
-         case 'ruido':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_MEAN_REMOVAL );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_MEAN_REMOVAL );
-                    }
-          break;
-               case 'suave':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_SMOOTH, $arg1 );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_SMOOTH, $arg1 );
-                    }
-                    break;
-               /* SOMENTE 5.3 ou superior */
-               case 'pixel':
-                    if( is_numeric( $quantidade ) && $quantidade > 1 )
-                    {
-                         for( $i = 1; $i <= $quantidade; $i++ )
-               {
-                   imagefilter( $this->img, IMG_FILTER_PIXELATE, $arg1, $arg2 );
-               }
-                    }
-                    else
-                    {
-                         imagefilter( $this->img, IMG_FILTER_PIXELATE, $arg1, $arg2 );
-                    }
-                    break;
-         default:
-          break;
-     }
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_GAUSSIAN_BLUR );
+				}
+				break;
+			case 'blur2':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_SELECTIVE_BLUR );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_SELECTIVE_BLUR );
+				}
+				break;
+			case 'brilho':
+				imagefilter( $this->img, IMG_FILTER_BRIGHTNESS, $arg1 );
+				break;
+			case 'cinzas':
+				imagefilter( $this->img, IMG_FILTER_GRAYSCALE );
+				break;
+			case 'colorir':
+				imagefilter( $this->img, IMG_FILTER_COLORIZE, $arg1, $arg2, $arg3, $arg4 );
+				break;
+			case 'contraste':
+				imagefilter( $this->img, IMG_FILTER_CONTRAST, $arg1 );
+				break;
+			case 'edge':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_EDGEDETECT );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_EDGEDETECT );
+				}
+				break;
+			case 'emboss':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_EMBOSS );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_EMBOSS );
+				}
+				break;
+			case 'negativo':
+				imagefilter( $this->img, IMG_FILTER_NEGATE );
+				break;
+			case 'ruido':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_MEAN_REMOVAL );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_MEAN_REMOVAL );
+				}
+				break;
+			case 'suave':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_SMOOTH, $arg1 );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_SMOOTH, $arg1 );
+				}
+				break;
+			// SOMENTE 5.3 ou superior
+			case 'pixel':
+				if( is_numeric( $quantidade ) && $quantidade > 1 )
+				{
+					for( $i = 1; $i <= $quantidade; $i++ )
+					{
+						imagefilter( $this->img, IMG_FILTER_PIXELATE, $arg1, $arg2 );
+					}
+				}
+				else
+				{
+					imagefilter( $this->img, IMG_FILTER_PIXELATE, $arg1, $arg2 );
+				}
+				break;
+			default:
+				break;
+     	}
           return $this;
     } // fim filtrar
 
