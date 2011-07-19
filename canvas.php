@@ -382,17 +382,17 @@ class canvas {
           $dif_y = $dif_h = $this->nova_altura;
 
           /**
-           * Verifica altura e largura
-           * Cálculo corrigido por Leonardo <leonardomascara@gmail.com>
-           **/
-          if ( $this->nova_largura >= $this->nova_altura )
+      		 * Verifica altura e largura
+      		 * Calculo corrigido por Gilton Guma <http://www.gsguma.com.br/>
+      		 */
+          if ( ($this->largura / $this->nova_largura ) > ( $this->altura / $this->nova_altura ) )
           {
-               $dif_w = ( ( $this->largura * $this->nova_altura ) / $this->altura );
+              $fator = $this->largura / $this->nova_largura;
+          } else {
+              $fator = $this->altura / $this->nova_altura;
           }
-          else
-          {
-               $dif_h = ( ( $this->altura * $this->nova_largura ) / $this->largura );
-          }
+          $dif_w = $this->largura / $fator;
+          $dif_h = $this->altura  / $fator;
 
           // copia com o novo tamanho, centralizando
           $dif_x = ( $dif_x - $dif_w ) / 2;
