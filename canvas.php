@@ -328,6 +328,10 @@ class canvas {
                case 'preenchimento':
                     $this->redimensionaPreenchimento();
                     break;
+               case 'proporcional': 
+                   // modo proporcional sem preenchimento adicionado por Fernando VR (goo.gl/iDtmP)
+                    $this->redimensionaProporcional();
+                    break;		
                default:
                     $this->redimensionaSimples();
                     break;
@@ -400,6 +404,35 @@ class canvas {
           imagecopyresampled( $this->img_temp, $this->img, $dif_x, $dif_y, 0, 0, $dif_w, $dif_h, $this->largura, $this->altura );
           $this->img     = $this->img_temp;
      } // fim redimensionaPreenchimento()
+
+     /**
+      * Redimensiona imagem sem cropar, proporcionalmente e sem preenchimento.
+      * Modo proporcional adicionado por Fernando VR ( http://goo.gl/iDtmP )
+      * @return void
+      **/
+     private function redimensionaProporcional()
+     {
+	   /**
+           * Verifica altura e largura proporcional.
+           **/
+		   $ratio_orig = $this->largura/$this->altura;
+
+			if ($this->nova_largura/$this->nova_altura > $ratio_orig) {
+			   $dif_w = $this->nova_altura*$ratio_orig;
+			   $dif_h = $this->nova_altura;
+			} else {
+				$dif_w = $this->nova_largura;
+			   $dif_h = $this->nova_largura/$ratio_orig;
+			}
+
+          // cria imagem de destino temporária
+          $this->img_temp = imagecreatetruecolor( $dif_w, $dif_h );
+		 
+          // Resample
+	  imagecopyresampled($this->img_temp, $this->img, 0, 0, 0, 0, $dif_w, $dif_h, $this->largura, $this->altura);
+          $this->img   = $this->img_temp;
+     } // fim redimensionaProporcional()
+
 
      /**
       * Calcula a posição do crop
