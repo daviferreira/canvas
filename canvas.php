@@ -923,6 +923,29 @@ class canvas {
          }
           return $this;
     } // fim filtrar
+    
+    
+    /**  
+    Adiciona o melhor filtro para as imagens o sharpen | Jefferson Oliveira 
+    Usa GD image objects 
+    **/
+    
+   
+   function imagesharpen() {
+    
+        $qualidade = array(
+            array(-1, -1, -1),
+            array(-1, 16, -1),
+            array(-1, -1, -1),
+        );
+    
+        $divisao = array_sum(array_map('array_sum', $qualidade));
+        $offset = 0; 
+        imageconvolution($this->img, $qualidade, $divisao, $offset);
+        
+        return $this;
+    }	
+    
 
      /**
       * retorna saída para tela ou arquivo
