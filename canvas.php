@@ -19,7 +19,12 @@ class canvas {
      * Armazenam as dimensões da imagem atual e da nova imagem caso exista
      **/
     private $largura, $altura, $nova_largura, $nova_altura, $tamanho_html;
-
+    
+    /**
+    * Variáveis para o posicionamento do crop
+    **/
+    private $pos_x, $pos_y;
+    
     /**
      * Informações sobre o arquivo enviado e diretório
      **/
@@ -475,7 +480,9 @@ class canvas {
       * Redimensiona imagem, cropando para encaixar no novo tamanho, sem sobras
       * baseado no script original de Noah Winecoff
       * http://www.findmotive.com/2006/12/13/php-crop-image/
-      * atualizado para receber o posicionamento X e Y do crop na imagem
+      * atualizado para receber o posicionamento X e Y e/ou Coordenadas Inteligentes
+      * do crop na imagem.
+      * Coordenadas Inteligentes implementado por Aires Gonçalves <contato@airesgoncalves.com.br>
       * @return void
       **/
      private function redimensionaCrop()
@@ -488,6 +495,66 @@ class canvas {
 
           // adiciona cor de fundo à nova imagem
           $this->preencheImagem();
+          
+          //coordenadas inteligentes
+          switch( $this->posicao_crop[ 0 ]  ){
+          	
+          	case 'esquerdo':
+          	          		
+          		$this->pos_x = 0;
+          	
+          	break;
+			
+		case 'direito':
+		
+			$this->pos_x = $this->largura - $this->nova_largura;
+			
+		break;
+			
+		case 'meio':
+			
+			$this->pos_x = ( $this->largura - $this->nova_largura ) / 2;
+			
+		break;
+			
+		default:
+			
+			$this->pos_x = $this->posicao_crop[ 0 ];
+				
+		break;
+		
+           }
+          
+           switch( $this->posicao_crop[ 1 ] ){
+          	
+          	case 'topo':
+          		
+          		$this->pos_y = 0;
+			
+		break;
+			
+		case 'inferior':
+			
+			$this->pos_y = $this->altura - $this->nova_altura;
+			
+		break;
+			
+		case 'meio':
+			
+			$this->pos_y = ( $this->altura - $this->nova_altura ) / 2;
+				
+		break;
+			
+		default:
+			
+			$this->pos_y = $this->posicao_crop[ 1 ];
+				
+		break;
+			
+	 }
+		
+	  $this->posicao_crop[ 0 ] = $this->pos_x;
+	  $this->posicao_crop[ 1 ] = $this->pos_y;
 
           imagecopyresampled( $this->img_temp, $this->img, -$this->posicao_crop[0], -$this->posicao_crop[1], 0, 0, $this->posicao_crop[2], $this->posicao_crop[3], $this->largura, $this->altura );
 
