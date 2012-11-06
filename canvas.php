@@ -58,6 +58,21 @@ class canvas {
           // RGB padrão -> branco
      $this->rgb( 255, 255, 255 );
      } // fim construtor
+     
+     /**
+     * Reseta variáveis para poder reutilizar objeto em encadeamentos longos
+     * @return void
+     **/
+     public function resetar(){
+			
+		$this->origem = $this->img = $this->img_temp = $this->largura = $this->altura = 
+		$this->nova_largura = $this->nova_altura = $this->tamanho_html = $this->pos_x = 
+		$this->pos_y = $this->formato = $this->extensao = $this->tamanho = $this->arquivo = 
+		$this->diretorio = $this->posicao_crop = NULL;
+	
+	    	$this->rgb( 255, 255, 255 );
+     }// fim resetar
+     
 
      /**
       * Retorna dados da imagem
@@ -1055,7 +1070,6 @@ class canvas {
                          header( "Content-type: image/jpeg" );
                          imagejpeg( $this->img, NULL, $qualidade );
                          imagedestroy( $this->img );
-                         exit;
                     }
                     break;
                case 'png':
@@ -1068,7 +1082,6 @@ class canvas {
                          header( "Content-type: image/png" );
                          imagepng( $this->img );
                          imagedestroy( $this->img );
-                         exit;
                     }
                     break;
                case 'gif':
@@ -1081,13 +1094,14 @@ class canvas {
                          header( "Content-type: image/gif" );
                          imagegif( $this->img );
                          imagedestroy( $this->img );
-                         exit;
                     }
                     break;
                default:
                     return false;
                     break;
           }
+          
+     return $this;
 
      } // fim grava
 
