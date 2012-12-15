@@ -146,7 +146,7 @@ class canvas {
      {
           // imagem de origem
           $pathinfo            = pathinfo( $this->origem );
-          $this->extensao      = strtolower( $pathinfo['extension'] );
+          $this->extensao = array_key_exists('extension', $pathinfo) ? strtolower($pathinfo['extension']) : strtolower(str_replace('image/', '', $obj['mime']));
           $this->arquivo       = $pathinfo['basename'];
           $this->diretorio     = $pathinfo['dirname'];
      } // fim dadosArquivo
