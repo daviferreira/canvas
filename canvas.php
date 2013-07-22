@@ -39,13 +39,33 @@ class canvas {
      * Coordenadas para posicionamento do crop
      **/
     private $posicao_crop;
-
+	
+	/**
+     * @var canvas
+     */
+    private static $instance;
+    
+    /**
+     * Método singleton para que apenas uma instancia da classe seja utilizada no servidor.
+     * @param String $origem
+     * @return canvas
+     */
+    public static function Instance($origem = '')
+    {
+        if(empty(self::$instance))
+            self::$instance = new canvas($origem);
+        else
+            self::$instance->resetar();
+        
+        return self::$instance;
+    }
+    
     /**
      * Construtor
      * @param $string caminho da imagem a ser carregada [opcional]
      * @return void
      **/
-     public function __construct( $origem = '' )
+     private function __construct( $origem = '' )
      {
 
           $this->origem = $origem;
@@ -56,7 +76,7 @@ class canvas {
           }
 
           // RGB padrão -> branco
-     $this->rgb( 255, 255, 255 );
+          $this->rgb( 255, 255, 255 );
      } // fim construtor
      
      /**
