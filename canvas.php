@@ -158,7 +158,8 @@ class canvas
     {
         // imagem de origem
         $pathinfo        = pathinfo($this->origem);
-        $this->extensao  = array_key_exists('extension', $pathinfo) ? strtolower($pathinfo['extension']) : strtolower(str_replace('image/', '', $obj['mime']));
+        $obj = getimagesize($this->origem);
+        $this->extensao = strtolower(str_replace('image/', '', $obj['mime']));
         $this->arquivo   = $pathinfo['basename'];
         $this->diretorio = $pathinfo['dirname'];
     } // fim dadosArquivo
@@ -205,8 +206,8 @@ class canvas
     public function carregaUrl($url)
     {
         $this->origem   = $url;
-        $pathinfo       = pathinfo($this->origem);
-        $this->extensao = strtolower($pathinfo['extension']);
+        $obj = getimagesize($this->origem);
+        $this->extensao = strtolower(str_replace('image/', '', $obj['mime']));
         switch ($this->extensao) {
             case 'jpg':
             case 'jpeg':
