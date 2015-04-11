@@ -8,7 +8,7 @@
  * @version    1.0 $ 2010-10-17 19:11:51 $
  */
 
-class canvas
+class Canvas
 {
 
     /**
